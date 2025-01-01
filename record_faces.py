@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 # instantiate a camera object to capture images
-cam = cv2.VideoCapture(1)
+cam = cv2.VideoCapture(0)
 
 # create a haar-cascade object for face detection
 face_cas = cv2.CascadeClassifier('./haarcascade_frontalface_default.xml')
@@ -31,7 +31,7 @@ while True:
         for (x, y, w, h) in faces:
 
             # get the face component from the image frame
-			face_component = frame[y:y+h, x:x+w, :]
+            face_component = frame[y:y+h, x:x+w, :]
 
             # resize the face image to 50X50X3
             fc = cv2.resize(face_component, (50, 50))
@@ -54,7 +54,7 @@ while True:
             break
     else:
         # if the camera is not working, print "error"
-        print "error"
+        print ('error')
 
 # now we destroy the windows we have created
 cv2.destroyAllWindows()
@@ -63,10 +63,10 @@ cv2.destroyAllWindows()
 data = np.asarray(data)
 
 # print the shape as a sanity-check
-print data.shape
+print (data.shape)
 
 # save the data as a numpy matrix in an encoded format
-np.save('face_01', data)
+np.save('face_02', data)
 
 # We'll run the script for different people and store
 # the data into multiple files

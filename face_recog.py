@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 # instantiate the camera object and haar cascade
-cam = cv2.VideoCapture(1)
+cam = cv2.VideoCapture(0)
 face_cas = cv2.CascadeClassifier('./haarcascade_frontalface_default.xml')
 
 # declare the type of font to be used on output window
@@ -12,23 +12,23 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 f_01 = np.load('face_01.npy').reshape((20, 50*50*3))    # Prashant
 f_02=  np.load('face_02.npy').reshape((20, 50*50*3))    # Nil
 
-print f_01.shape, f_02.shape
+print(f_01.shape, f_02.shape)
 
 # create a look-up dictionary
 names = {
-    0: 'Prashant',
-    1: 'Nil',
+    0: 'Yovie',
+    1: 'Hedi',
 
 }
 
 # create a matrix to store the labels
 labels = np.zeros((40, 1))
 labels[:20, :] = 0.0    # first 20 for Prashant (0)
-labels[40, :] = 1.0 # next 20 for Nil (1)
+labels[20:, :] = 1.0 # next 20 for Nil (1)
 
 # combine all info into one data array
 data = np.concatenate([f_01, f_02]) # (40, 7500)
-print data.shape, labels.shape  # (40, 1)
+print(data.shape, labels.shape)  # (40, 1)
 
 # the distance and knn functions we defined earlier
 def distance(x1, x2):
@@ -57,7 +57,7 @@ while True:
 
         # for each face
         for (x, y, w, h) in faces:
-            face_component = frame[y:y+h, x:x+w, :]
+            face_component = frame[y:y+h, x:x+w]
             fc = cv2.resize(face_component, (50, 50))
 
             # after processing the image and rescaling
@@ -78,6 +78,6 @@ while True:
         if cv2.waitKey(1) == 27:
             break
     else:
-        print 'Error'
+        print('Error')
 
 cv2.destroyAllWindows()
